@@ -138,7 +138,13 @@
                           <td>{{ $cart->qty }}</td>
                           <td>Rp. {{ number_format($cart->total, 0, ".", ".") }}</td>
                         </tr>
+                          @php
+                              $emptyCart = false;
+                          @endphp
                         @empty
+                          @php
+                              $emptyCart = true;
+                          @endphp
                         <tr>
                           <td colspan="3" class="text-center">Keranjang Kosong!</td>
                         </tr>
@@ -150,18 +156,70 @@
                       <tfoot>
                         <tr>
                           <th colspan="2">Total</th>
-                          <th>Rp. {{ number_format($total, 0, ".", ".") }}</th>
+                          <th>Rp. {{ number_format($discount+$carts->sum('total'), 0, ".", ".") }}</th>
                         </tr>
                         <tr>
                           <th colspan="2">Discount</th>
-                          <th>Rp. {{ number_format(0, 0, ".", ".") }}</th>
+                          <th>Rp. {{ number_format($discount, 0, ".", ".") }}</th>
                         </tr>
                         <tr>
                           <th colspan="2">Grand Total</th>
-                          <th>Rp. {{ number_format($total, 0, ".", ".") }}</th>
+                          <th>Rp. {{ number_format($carts->sum('total'), 0, ".", ".") }}</th>
                         </tr>
                       </tfoot>
                     </table>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <div class="card {{ ($emptyCart) ? 'd-none':'' }}">
+                <div class="card-header">
+                  <h3 class="card-title">Pembayaran</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <form class="needs-validation w-100" novalidate="" method="post" action="{{ route('transactions.store') }}">
+                      @csrf
+                      @method('POST')
+                      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                      <input type="hidden" name="discount" value="{{ $discount }}">
+                      <input type="hidden" name="price" id="jumlahTotal" value="{{ $carts->sum('total') }}">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Kasir</label>
+                            <input disabled type="text" name="name" class="form-control" value="{{ Auth::user()->name }}">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Tanggal</label>
+                            <input disabled  class="form-control" value="{{ date('d/m/y') }}">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Uang</label>
+                            <input type="number" id="inputUang" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Kembalian</label>
+                            <input type="text" id="inputKembalian" class="form-control" disabled>
+                          </div>
+                        </div>
+                      </div>
+                      <button id="paymentProcess" class="btn btn-success mt-3"><i class="fa fa-paper-plane" aria-hidden="true"></i> Proses Pembayaran</button>
+                    </form>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -224,6 +282,17 @@
         $('#cartPrice').val(cart['price']);
         $('#cartPrice1').val(cart['price']);
         $('#productImage').attr('src', 'gambar_produk/'+cart['img_path']);
+    });
+    $('#inputUang').keyup(function () {
+      let kembalian =  $('#inputUang').val() - $('#jumlahTotal').val();
+      if (kembalian >= 0) {
+        let kembalianIDR = kembalian.toString().split(".");
+        kembalianIDR[0] = kembalianIDR[0].replace(/\B(?=(\d{3})+(?!\d))/g,".");
+        $('#inputKembalian').val("Rp. "+kembalianIDR.join(","));
+      }
+      else{
+        $('#inputKembalian').val("");
+      }
     });
     @if (session('successinsert'))
         Swal.fire(

@@ -12,6 +12,10 @@ class Transaction extends Model
         'invoice',
         'list_product',
         'discount',
-        'price'
+        'price',
+        'user_id'
     ];
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

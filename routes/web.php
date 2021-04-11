@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function(){
     /* Transaction Action */
     Route::group(['prefix'=>'transactions'], function(){
         Route::get('/', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::post('/store', [TransactionController::class, 'store'])->name('transactions.store');
     });
 
     /* Cart Action */
