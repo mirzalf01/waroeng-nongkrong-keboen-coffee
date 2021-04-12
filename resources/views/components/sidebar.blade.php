@@ -60,6 +60,23 @@
                     </p>
                     </a>
                 </li>
+                <li class="nav-item {{ Route::is('dailyReport.index') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
+                        <i class="fas fa-chart-bar nav-icon"></i>
+                        <p>
+                          Laporan
+                          <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ route('dailyReport.index') }}" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Laporan Harian</p>
+                          </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}"  onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();" class="nav-link">

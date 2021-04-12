@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +45,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/store', [CartController::class, 'store'])->name('carts.store');
         Route::put('/update', [CartController::class, 'update'])->name('carts.update');
         Route::delete('/destroy/{cart}', [CartController::class, 'destroy'])->name('carts.destroy');
+    });
+
+    /* Report Action */
+    Route::group(['prefix'=>'reports'], function(){
+        Route::get('/daily', [ReportController::class, 'dailyIndex'])->name('dailyReport.index');
     });
 });
