@@ -75,12 +75,14 @@
                             <p>Laporan Harian</p>
                           </a>
                         </li>
+                        @if (Auth::user()->role == 'Admin')
                         <li class="nav-item">
                           <a href="{{ route('monthlyReport.index') }}" class="nav-link {{ Route::is('monthlyReport.index') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Laporan Bulanan</p>
                           </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
                 <li class="nav-item">
