@@ -1,6 +1,6 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Laporan Harian')
+@section('title', 'Laporan Bulanan')
 
 @section('css')
 
@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0">Laporan Harian</h1>
+            <h1 class="m-0">Laporan Bulanan</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -66,7 +66,24 @@
               </div>
             <div class="col-12">
             <div class="card">
-                <!-- /.card-header -->
+                <div class="card-header">
+                    Filter Data :
+                    <select class="form-control" name="filter" id="filterSelect">
+                        <option selected disabled>-- Pilih bulan --</option>
+                        <option value="{{ date('Y') }}-01">Januari</option>
+                        <option value="{{ date('Y') }}-02">Februari</option>
+                        <option value="{{ date('Y') }}-03">Maret</option>
+                        <option value="{{ date('Y') }}-04">April</option>
+                        <option value="{{ date('Y') }}-05">Mei</option>
+                        <option value="{{ date('Y') }}-06">Juni</option>
+                        <option value="{{ date('Y') }}-07">Juli</option>
+                        <option value="{{ date('Y') }}-08">Agustus</option>
+                        <option value="{{ date('Y') }}-09">September</option>
+                        <option value="{{ date('Y') }}-10">Oktober</option>
+                        <option value="{{ date('Y') }}-11">November</option>
+                        <option value="{{ date('Y') }}-12">Desember</option>
+                    </select>
+                </div>
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
                     <thead class="bg-dark">
@@ -77,7 +94,7 @@
                         <th>List Produk</th>
                         <th>Discount</th>
                         <th>Total</th>
-                        <th>Waktu</th>
+                        <th>Tanggal</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,7 +109,14 @@
                         <td>{{ $report->list_product }}</td>
                         <td>Rp. {{ number_format($report->discount, 0, ".", ".") }}</td>
                         <td>Rp. {{ number_format($report->price, 0, ".", ".") }}</td>
-                        <td>{{ substr($report->created_at, 11,5) }}</td>
+                        <td>
+                            {{-- {{ substr($report->created_at, 0,10) }} --}}
+                            @php
+                                $orgDate = substr($report->created_at, 0,10);
+                                $newDate = date("d/m/Y", strtotime($orgDate));
+                                echo $newDate;
+                            @endphp
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -125,6 +149,11 @@
 <script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
 <script>
+    $('#filterSelect').change(function () {
+        let url = '{{ route('monthlyReport.index') }}';
+        let month = $('#filterSelect').val();
+        window.location = url+'/'+month;
+    });
     $(function () {
         $("#example1").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,"buttons": ["excel", "print"]

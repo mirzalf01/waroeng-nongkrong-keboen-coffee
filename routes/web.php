@@ -50,5 +50,7 @@ Route::group(['middleware' => 'auth'], function(){
     /* Report Action */
     Route::group(['prefix'=>'reports'], function(){
         Route::get('/daily', [ReportController::class, 'dailyIndex'])->name('dailyReport.index');
+        Route::get('/monthly', [ReportController::class, 'monthlyIndex'])->name('monthlyReport.index');
+        Route::get('/monthly/{filter}', [ReportController::class, 'monthlyFilter'])->name('monthlyReport.filter');
     });
 });

@@ -60,7 +60,7 @@
                     </p>
                     </a>
                 </li>
-                <li class="nav-item {{ Route::is('dailyReport.index') ? 'menu-open' : '' }}">
+                <li class="nav-item {{ Route::is('dailyReport.index') ? 'menu-open' : Route::is('monthlyReport.index') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
                         <i class="fas fa-chart-bar nav-icon"></i>
                         <p>
@@ -73,6 +73,12 @@
                           <a href="{{ route('dailyReport.index') }}" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Laporan Harian</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{{ route('monthlyReport.index') }}" class="nav-link {{ Route::is('monthlyReport.index') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Laporan Bulanan</p>
                           </a>
                         </li>
                     </ul>
