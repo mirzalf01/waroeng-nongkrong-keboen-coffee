@@ -34,11 +34,11 @@
                 <div class="info-box-content">
                     <span class="info-box-text">Produk</span>
                     <span class="info-box-number">
-                    {{-- @if ($products == null)
+                    @if ($products == null)
                         {{ 0 }}
                     @else
                         {{ $products->count() }}
-                    @endif --}}
+                    @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -51,13 +51,13 @@
                 <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Transaksi</span>
+                    <span class="info-box-text">Transaksi Harian</span>
                     <span class="info-box-number">
-                        {{-- @if ($transactions == null)
+                        @if ($transactions == null)
                             {{ 0 }}
                         @else
                             {{ $transactions->count() }}
-                        @endif --}}
+                        @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -71,16 +71,16 @@
 
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
-                <span class="info-box-icon bg-success elevation-1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill    "></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Admin</span>
+                    <span class="info-box-text">Pemasukan Harian</span>
                     <span class="info-box-number">
-                        {{-- @if ($admins == null)
+                        @if ($transactions == null)
                             {{ 0 }}
                         @else
-                            {{ $admins->count() }}
-                        @endif --}}
+                            Rp. {{ number_format($transactions->sum('price'), 0, ".", ".") }}
+                        @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -93,13 +93,13 @@
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">New Members</span>
+                    <span class="info-box-text">Karyawan</span>
                     <span class="info-box-number">
-                        {{-- @if ($members == null)
+                        @if ($users == null)
                             {{ 0 }}
                         @else
-                            {{ $members->count() }}
-                        @endif --}}
+                            {{ $users->count() }}
+                        @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
