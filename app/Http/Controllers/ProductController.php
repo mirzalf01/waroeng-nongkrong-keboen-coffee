@@ -49,7 +49,6 @@ class ProductController extends Controller
             'name' => 'required|max:50',
             'image' => 'file|image|mimes:jpeg,png,jpg|max:2048',
             'category' => 'required|max:30',
-            'description' => 'required',
             'price' => 'required|numeric'
         ], $this->messages);
         $fileName = "default.jpg";
@@ -104,7 +103,6 @@ class ProductController extends Controller
             'name' => 'required|max:50',
             'image' => 'file|image|mimes:jpeg,png,jpg|max:2048',
             'category' => 'required|max:30',
-            'description' => 'required',
             'price' => 'required|numeric'
         ], $this->messages);
         $product = Product::find($request->id);

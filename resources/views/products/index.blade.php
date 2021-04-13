@@ -140,10 +140,11 @@
                 <select name="category" class="form-control" value="{{old('category')}}">
                   <option value="Makanan">Makanan</option>
                   <option value="Minuman">Minuman</option>
+                  <option value="Cemilan">Cemilan</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Deskripsi *</label>
+                <label>Deskripsi</label>
                 <textarea class="form-control" name="description" value="{{old('description')}}"></textarea>
               </div>
               <div class="form-group">
@@ -188,10 +189,11 @@
                 <select name="category" id="productCategory" class="form-control" value="{{old('category')}}">
                   <option value="Makanan">Makanan</option>
                   <option value="Minuman">Minuman</option>
+                  <option value="Cemilan">Cemilan</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Deskripsi *</label>
+                <label>Deskripsi</label>
                 <textarea id="productDescription" class="form-control" name="description" value="{{old('description')}}"></textarea>
               </div>
               <div class="form-group">
