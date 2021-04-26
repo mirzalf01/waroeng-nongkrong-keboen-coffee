@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\BestSeller;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
@@ -41,6 +42,34 @@ class TransactionController extends Controller
                 $listProduct = $listProduct." ".$cart->product->name." Rp. ".number_format($cart->product->price, 0, ".", ".")." x".$cart->qty.",";
             }
             $iterator++;
+            $bestSeller = BestSeller::where('product_id', $cart->product->id)->first();
+            if ($bestSeller == null) {
+                BestSeller::create([
+                    'product_id' =>$cart->product->id,
+                    'day_counter' => $cart->qty,
+                    'month_counter' => $cart->qty
+                ]);
+            }
+            else{
+                $lastMonth = substr($bestSeller->updated_at, 5, 2);
+                $thisMonth = date("m");
+                if ($lastMonth == $thisMonth) {
+                    $bestSeller->month_counter = $bestSeller->month_counter + $cart->qty;
+                    $lastDay = substr($bestSeller->updated_at, 8, 2);
+                    $thisDay = date("d");
+                    if ($lastDay == $thisDay) {
+                        $bestSeller->day_counter = $bestSeller->day_counter + $cart->qty;
+                    }
+                    else{
+                        $bestSeller->day_counter = $cart->qty;
+                    }
+                }
+                else{
+                    $bestSeller->day_counter = $cart->qty;
+                    $bestSeller->month_counter = $cart->qty;
+                }
+                $bestSeller->save();
+            }
         }
         Transaction::create([
             'invoice' => $invoice,

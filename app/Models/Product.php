@@ -18,4 +18,7 @@ class Product extends Model
     public function cart(){
         return $this->hasOne('App\Models\Cart');
     }
+    public function bestseller(){
+        return $this->hasOne('App\Models\BestSeller');
+    }
 }
