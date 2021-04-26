@@ -1,118 +1,95 @@
-@extends('layouts.adminlte')
+@extends('layouts.stisla')
 
 @section('title', 'Keranjang')
 
 @section('css')
-
-<!-- DataTables -->
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('Stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('Stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
 
-@section('content')
+@section('main-content')
+<section class="section">
+    <div class="row"></div>
+    <div class="section-header">
+      <h1>Keranjang</h1>
+    </div>
+    {{-- alert error --}}
+    <div class="row">
+      <div class="col-12">
+      @if (count($errors) > 0)
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
+      </div>
+    </div>
 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1 class="m-0">Keranjang</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('transactions.index') }}">Transaksi</a></li>
-            <li class="breadcrumb-item active">Keranjang</li>
-            </ol>
-        </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-
-
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        {{-- alert error --}}
-        <div class="row">
-            <div class="col-12">
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            </div>
-        </div>
-        <!-- data tables -->
-        <div class="row">
-            <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</a>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                    <thead class="bg-dark">
-                    <tr>
-                        <th>No.</th>
-                        <th>Nama</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Discount</th>
-                        <th>Total Harga</th>
-                        <th>Opsi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+    {{-- Datatable --}}
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-primary rounded"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Discount</th>
+                    <th>Total Harga</th>
+                    <th>Opsi</th>
+                  </tr>
+                  </thead>
+                <tbody>
                     @php
-                        $counter = 1;
-                    @endphp
-                    @foreach ($carts as $cart)
+                    $counter = 1;
+                @endphp
+                @foreach ($carts as $cart)
+                <tr>
+                    <td>{{ $counter++ }}</td>
+                    <td>{{ $cart->product->name }}</td>
+                    <td>Rp. {{ number_format($cart->product->price, 0, ".", ".") }}</td>
+                    <td>{{ number_format($cart->qty, 0, ".", ".") }}</td>
+                    <td>Rp. {{ number_format($cart->discount, 0, ".", ".") }}</td>
+                    <td>Rp. {{ number_format($cart->total, 0, ".", ".") }}</td>
+                    <td>
+                        <button type="button" data-cart="{{ $cart }}" class="btn btn-info btn-sm modBut" data-toggle="modal" data-target="#editproduct">
+                            <span class="fas fa-edit" aria-hidden="true"></span> Edit
+                        </button>
+                        <form class="d-inline" action="{{ route('carts.destroy', $cart) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apa anda yakin?')"><span class="far fa-trash-alt" aria-hidden="true"></span> Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
+                <tfoot>
                     <tr>
-                        <td>{{ $counter++ }}</td>
-                        <td>{{ $cart->product->name }}</td>
-                        <td>Rp. {{ number_format($cart->product->price, 0, ".", ".") }}</td>
-                        <td>{{ number_format($cart->qty, 0, ".", ".") }}</td>
-                        <td>Rp. {{ number_format($cart->discount, 0, ".", ".") }}</td>
-                        <td>Rp. {{ number_format($cart->total, 0, ".", ".") }}</td>
-                        <td>
-                            <button type="button" data-cart="{{ $cart }}" class="btn btn-info btn-sm modBut" data-toggle="modal" data-target="#editproduct">
-                                <span class="fas fa-edit" aria-hidden="true"></span> Edit
-                            </button>
-                            <form class="d-inline" action="{{ route('carts.destroy', $cart) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apa anda yakin?')"><span class="far fa-trash-alt" aria-hidden="true"></span> Hapus</button>
-                            </form>
-                        </td>
+                        <td colspan="5">Total Harga</td>
+                        <td colspan="2">Rp. {{ number_format($carts->sum('total'), 0, ".", ".") }}</td>
                     </tr>
-                    @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">Total Harga</td>
-                            <td colspan="2">Rp. {{ number_format($carts->sum('total'), 0, ".", ".") }}</td>
-                        </tr>
-                    </tfoot>
-                    </table>
-                </div>
-                <!-- /.card-body -->
+                </tfoot>
+              </table>
             </div>
-            </div>
+          </div>
         </div>
-        <!-- /.row -->
-    </div><!--/. container-fluid -->
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- /.content -->
-    
 @endsection
 
 @section('modals')
@@ -163,25 +140,18 @@
 @endsection
 
 @section('js')
-<!-- DataTables  & Plugins -->
-<script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+  <!-- JS Libraies -->
+  <script src="{{ asset('Stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
 
-<script>
-    $(function () {
-        $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  
+  <script>
+    $("#table-1").dataTable({
+      "columnDefs": [
+        { "sortable": false, "targets": [1,6] }
+      ]
     });
     $('#editproduct').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -202,23 +172,11 @@
         $('#productTotal').val(total);
     });
     @if (session('successinsert'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successinsert') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successinsert') }}', 'success');
     @elseif(session('successedit'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successedit') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successedit') }}', 'success');
     @elseif(session('successdelete'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successdelete') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successdelete') }}', 'success');
     @endif
-</script>
+  </script>
 @endsection

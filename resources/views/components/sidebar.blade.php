@@ -1,106 +1,29 @@
 <div>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4"><!-- Brand Logo -->
-        <a href="{{ route('dashboard') }}" class="brand-link">
-            <img src="{{ asset('logo/logo1.png') }}" width="40px" alt="">
-        <span class="brand-text font-weight-light">Keboen Coffee</span>
-        </a>
-    
-        <!-- Sidebar -->
-        <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-4 pb-3 mb-3 d-flex">
-            <div class="image my-auto">
-                @if (Auth::user()->profile_photo_path == NULL)
-                <img src="{{ asset('AdminLTE/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
-                @else
-                <img src="{{ asset('profile_photo/'.Auth::user()->profile_photo_path) }}" class="img-circle elevation-2" alt="User Image">
-                @endif
-            </div>
-            <div class="info">
-            <a href="#" class="text-white d-block">{{ Auth::user()->name }}</a>
-            <sub style="color: #F4F6F9">{{ Auth::user()->role }}</sub>
-            </div>
-        </div>
-    
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-                <li class="nav-header">Main Navigation</li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link {{ Route::is('dashboard') ? 'active':'' }}">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Dashboard
-                    </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('products.index') }}" class="nav-link {{ Route::is('products.index') ? 'active':'' }}">
-                    <i class="nav-icon fas fa-utensils"></i>
-                    <p>
-                        Produk
-                    </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('suppliers.index') }}" class="nav-link {{ Route::is('suppliers.index') ? 'active':'' }}">
-                    <i class="nav-icon fa fa-address-book"></i>
-                    <p>
-                        Supplier
-                    </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('transactions.index') }}" class="nav-link {{ Route::is('transactions.index') ? 'active':'' }}">
-                    <i class="fas fa-exchange-alt nav-icon"></i>
-                    <p>
-                        Transaksi
-                    </p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Route::is('dailyReport.index') ? 'menu-open' : Route::is('monthlyReport.index') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
-                        <i class="fas fa-chart-bar nav-icon"></i>
-                        <p>
-                          Laporan
-                          <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                          <a href="{{ route('dailyReport.index') }}" class="nav-link {{ Route::is('dailyReport.index') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Laporan Harian</p>
-                          </a>
-                        </li>
-                        @if (Auth::user()->role == 'Admin')
-                        <li class="nav-item">
-                          <a href="{{ route('monthlyReport.index') }}" class="nav-link {{ Route::is('monthlyReport.index') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Laporan Bulanan</p>
-                          </a>
-                        </li>
-                        @endif
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}"  onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();" class="nav-link">
-                    <i class="nav-icon fas fa-power-off"></i>
-                    <p>
-                        Logout
-                    </p>
-                    </a>
-                </li>
+    <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="{{ route('dashboard') }}"><img src="{{ asset('logo/logo1.png') }}" width="40px" alt=""> Keboen Coffee</a>
+          </div>
+          <div class="sidebar-brand sidebar-brand-sm">
+          <a href="{{ route('dashboard') }}"><img src="{{ asset('logo/logo1.png') }}" width="40px" alt=""></a>
+          </div>
+          <ul class="sidebar-menu">
+              <li class="menu-header">Main Menu</li>
+              <li class="{{ (Route::is('dashboard')) ? 'active':'' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+              <li class="{{ (Route::is('products.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('products.index') }}"><i class="fas fa-boxes"></i> <span>Produk</span></a></li>
+              <li class="{{ (Route::is('suppliers.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('suppliers.index') }}"><i class="fas fa-truck" aria-hidden="true"></i> <span>Supplier</span></a></li>
+              <li class="{{ (Route::is('transactions.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('transactions.index') }}"><i class="fas fa-exchange-alt nav-icon"></i> <span>Transaksi</span></a></li>
+              <li class="nav-item dropdown {{ (Route::is('dailyReport.index')) ? 'active' : ((Route::is('monthlyReport.index')) ? 'active' : '') }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> <span>Laporan</span></a>
+                <ul class="dropdown-menu">
+                  <li class="{{ (Route::is('dailyReport.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('dailyReport.index') }}">Laporan Harian</a></li>
+                  
+                  @if (Auth::user()->role != 'Karyawan')
+                  <li class="{{ (Route::is('monthlyReport.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('monthlyReport.index') }}">Laporan Bulanan</a></li>
+                  @endif
+                </ul>
+              </li>
             </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-        </div>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-        </form>
-        <!-- /.sidebar -->
-    </aside>
+        </aside>
+    </div>
 </div>

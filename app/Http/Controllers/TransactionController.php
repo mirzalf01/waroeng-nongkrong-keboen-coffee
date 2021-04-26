@@ -13,9 +13,10 @@ class TransactionController extends Controller
     public function index(){
         $foods = Product::where('category', 'Makanan')->orderBy('name', 'ASC')->get();
         $drinks = Product::where('category', 'Minuman')->orderBy('name', 'ASC')->get();
+        $snacks = Product::where('category', 'Cemilan')->orderBy('name', 'ASC')->get();
         $carts = Cart::all();
         $discount = Cart::sum(\DB::raw('qty * discount'));
-        return view('transactions.index', ['foods'=>$foods, 'drinks'=>$drinks, 'carts'=>$carts, 'discount'=>$discount]);
+        return view('transactions.index', ['foods'=>$foods, 'drinks'=>$drinks, 'carts'=>$carts, 'discount'=>$discount, 'snacks'=>$snacks]);
     }
     public function store(Request $request){
         $carts = Cart::all();

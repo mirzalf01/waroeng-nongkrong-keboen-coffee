@@ -10,7 +10,7 @@ class CartController extends Controller
     private $messages = [
         'required' => ':attribute tidak boleh kosong!',
         'numeric' => ':attribute harus di isi angka!',
-        'min' => ':attribute minimal Rp. 0'
+        'min' => ':attribute minimal > 0'
     ];
     public function index(){
         $carts = Cart::get();
@@ -18,7 +18,7 @@ class CartController extends Controller
     }
     public function store(Request $request){
         $this->validate($request,[
-            'jumlah' => 'required|numeric'
+            'jumlah' => 'required|numeric|min:1'
         ], $this->messages);
         $cart = Cart::where('product_id', $request->id)->first();
         if (empty($cart)) {
@@ -39,7 +39,7 @@ class CartController extends Controller
     }
     public function update(Request $request){
         $this->validate($request,[
-            'qty' => 'required|numeric',
+            'qty' => 'required|numeric|min:1',
             'discount' => 'required|numeric|min:0'
         ], $this->messages);
         $cart = Cart::find($request->id);

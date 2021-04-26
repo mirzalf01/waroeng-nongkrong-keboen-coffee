@@ -1,125 +1,89 @@
-{{-- <x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
-
-        <x-jet-validation-errors class="mb-4" />
-
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-jet-checkbox id="remember_me" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-jet-button class="ml-4">
-                    {{ __('Log in') }}
-                </x-jet-button>
-            </div>
-        </form>
-        <a href="{{ route('register') }}">Klik disini untuk mendaftar</a>
-    </x-jet-authentication-card>
-</x-guest-layout>
- --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Keboen Coffee | Log in</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Keboen Coffee | Log in</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="{{ asset('Stisla/node_modules/bootstrap-social/bootstrap-social.css') }}">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{{ asset('Stisla/assets/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('Stisla/assets/css/components.css') }}">
 </head>
-<body class="hold-transition login-page" style="background: url('{{ asset('logo/background.jpg') }}') center">
-<div class="login-box">
-<div class="card">
-    <div class="card-body login-card-body">
-        <div class="login-logo">
-            <img src="{{ asset('logo/logo1.png') }}" style="width: 50px; height: 50px" alt=""><b>Keboen</b>Coffee
+
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <img src="" alt="">
+            <div class="card card-primary">
+              <div class="card-header d-block">
+                  <div class="center text-center">
+                      <img src="{{ asset('logo/logo1.png') }}" alt="" style="height: 50px; width: 50px"><br>
+                      <h4 class="mt-3 text-dark">Masuk ke Keboen Coffee</h4>
+                  </div>
+              </div>
+              <div class="card-body">
+                @if ($errors->any())
+                    <div class="text-danger">
+                        <div class="font-medium text-red-600 text-center">{{ __('Email atau password salah') }}</div>
+                    </div><br>
+                @endif
+                <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
+                    @csrf
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1" value="{{ old('email') }}" required autofocus>
+                    <div class="invalid-feedback">
+                      Email harus di isi!
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="d-block">
+                    	<label for="password" class="control-label">Password</label>
+                    </div>
+                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <div class="invalid-feedback">
+                      Password harus di isi!
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                      Masuk
+                    </button>
+                  </div>
+                </form>
+                <a href="{{ route('register') }}">Klik disini untuk mendaftar</a>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- /.login-logo -->
-        <p class="login-box-msg">Sign in to start your session</p>
-        @if ($errors->any())
-            <div class="text-danger">
-                <div class="font-medium text-red-600 text-center">{{ __('Email atau password salah') }}</div>
-            </div><br>
-        @endif
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
-        @endif
+      </div>
+    </section>
+  </div>
 
-        <form action="{{ route('login') }}" method="post">
-            @csrf
-            <div class="input-group mb-3">
-                <input type="email" name="email" required value="{{ old('email') }}" class="form-control" placeholder="Email">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <input type="password" required name="password" class="form-control" placeholder="Password">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-            </div>
-        </form>
-        <p class="mb-0">
-            <a href="{{ route('register') }}" class="text-center">Klik disini untuk mendaftar.</a>
-        </p>
-    </div>
-    <!-- /.login-card-body -->
-</div>
-</div>
-<!-- /.login-box -->
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="{{ asset('Stisla/') }}/assets/js/stisla.js"></script>
 
-<!-- jQuery -->
-<script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
+  <!-- JS Libraies -->
+
+  <!-- Template JS File -->
+  <script src="{{ asset('Stisla/assets/js/scripts.js') }}"></script>
+  <script src="{{ asset('Stisla/assets/js/custom.js') }}"></script>
+
+  <!-- Page Specific JS File -->
 </body>
 </html>

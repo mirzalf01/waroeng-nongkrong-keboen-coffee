@@ -1,86 +1,70 @@
-@extends('layouts.adminlte')
+@extends('layouts.stisla')
 
 @section('title', 'Produk')
 
 @section('css')
-
-<!-- DataTables -->
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('Stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('Stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
 
-@section('content')
+@section('main-content')
+<section class="section">
+    <div class="row"></div>
+    <div class="section-header">
+      <h1>Produk</h1>
+    </div>
+    {{-- alert error --}}
+    <div class="row">
+      <div class="col-12">
+      @if (count($errors) > 0)
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
+      </div>
+    </div>
 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1 class="m-0">Produk</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active">Produk</li>
-            </ol>
-        </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-
-
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        {{-- alert error --}}
-        <div class="row">
-            <div class="col-12">
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            </div>
-        </div>
-        <!-- data tables -->
-        <div class="row">
-            <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</button>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                    <thead class="bg-dark">
-                    <tr>
-                        <th>No.</th>
-                        <th>Gambar</th>
-                        <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Deskripsi</th>
-                        <th>Harga</th>
-                        <th>Opsi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @php
+    {{-- Datatable --}}
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <button class="btn btn-primary rounded" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                      <th>No.</th>
+                      <th>Gambar</th>
+                      <th>Nama</th>
+                      <th>Kategori</th>
+                      <th>Deskripsi</th>
+                      <th>Harga</th>
+                      <th>Opsi</th>
+                  </tr>
+                  </thead>
+                <tbody>
+                  @php
                         $counter = 1;
                     @endphp
                     @foreach ($products as $product)
                     <tr>
                         <td>{{ $counter++ }}</td>
-                        <td><div class="d-flex justify-content-center">
-                                <img style="width: 75px; height: 75px; object-fit: cover" src="{{ asset('gambar_produk/'.$product->img_path) }}" alt="">
-                            </div>
+                        <td>
+                          <div class="d-flex justify-content-center">
+                            @if ($product->img_path == NULL)
+                            <img style="width: 75px; height: 75px; object-fit: cover" src="{{ asset('gambar_produk/default.png') }}" alt="">   
+                            @else
+                            <img style="width: 75px; height: 75px; object-fit: cover" src="{{ asset('gambar_produk/'.$product->img_path) }}" alt="">
+                            @endif
+                          </div>
                         </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category }}</td>
@@ -98,18 +82,16 @@
                         </td>
                     </tr>
                     @endforeach
-                    </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
+                </tbody>
+              </table>
             </div>
-            </div>
+          </div>
         </div>
-        <!-- /.row -->
-    </div><!--/. container-fluid -->
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- /.content -->
-    
 @endsection
 
 @section('modals')
@@ -133,7 +115,7 @@
               </div>
               <div class="form-group">
                 <label>Gambar</label>
-                <input type="file" name="image" class="form-control" required="">
+                <input type="file" name="image" class="form-control">
               </div>
               <div class="form-group">
                 <label>Kategori *</label>
@@ -182,7 +164,7 @@
               </div>
               <div class="form-group">
                 <label>Gambar</label>
-                <input type="file" name="image" class="form-control" required="">
+                <input type="file" name="image" class="form-control">
               </div>
               <div class="form-group">
                 <label>Kategori *</label>
@@ -194,7 +176,7 @@
               </div>
               <div class="form-group">
                 <label>Deskripsi</label>
-                <textarea id="productDescription" class="form-control" name="description" value="{{old('description')}}"></textarea>
+                <textarea style="height: 100px" id="productDescription" class="form-control" name="description" value="{{old('description')}}"></textarea>
               </div>
               <div class="form-group">
                 <label>Harga *</label>
@@ -212,25 +194,18 @@
 @endsection
 
 @section('js')
-<!-- DataTables  & Plugins -->
-<script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+  <!-- JS Libraies -->
+  <script src="{{ asset('Stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('Stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
 
-<script>
-    $(function () {
-        $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  
+  <script>
+    $("#table-1").dataTable({
+      "columnDefs": [
+        { "sortable": false, "targets": [1,6] }
+      ]
     });
     $('#editproduct').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -242,23 +217,11 @@
         $('#productPrice').val(product['price']);
     });
     @if (session('successinsert'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successinsert') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successinsert') }}', 'success');
     @elseif(session('successedit'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successedit') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successedit') }}', 'success');
     @elseif(session('successdelete'))
-        Swal.fire(
-            'Sukses',
-            '{{ session('successdelete') }}',
-            'success'
-        );
+        swal('Sukses', '{{ session('successdelete') }}', 'success');
     @endif
-</script>
+  </script>
 @endsection
