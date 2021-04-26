@@ -97,21 +97,6 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-12 col-12 col-sm-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>Recent Activities</h4>
-          </div>
-          <div class="card-body">
-            
-            <div class="text-center pt-1 pb-1">
-              <a href="#" class="btn btn-primary btn-lg btn-round">
-                View All
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <input type="hidden" value="{{ $items }}" id="items">
     <input type="hidden" value="{{ $counters }}" id="counters">
