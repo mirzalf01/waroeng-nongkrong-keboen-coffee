@@ -7,6 +7,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,5 +60,10 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('/monthly', [ReportController::class, 'monthlyIndex'])->name('monthlyReport.index');
             Route::get('/monthly/{filter}', [ReportController::class, 'monthlyFilter'])->name('monthlyReport.filter');
         });
+    });
+    Route::group(['prefix'=>'users', 'middleware'=>'RoleAdmin'], function(){
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::put('/update', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 });

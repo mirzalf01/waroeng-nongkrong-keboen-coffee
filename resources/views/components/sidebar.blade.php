@@ -23,6 +23,9 @@
                   @endif
                 </ul>
               </li>
+              @if (Auth::user()->role != 'Karyawan')
+              <li class="{{ (Route::is('users.index')) ? 'active':'' }}"><a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-users nav-icon"></i> <span>Karyawan</span></a></li>
+              @endif
             </ul>
         </aside>
     </div>
