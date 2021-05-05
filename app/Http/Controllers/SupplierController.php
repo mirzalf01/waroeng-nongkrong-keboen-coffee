@@ -43,7 +43,6 @@ class SupplierController extends Controller
         $this->validate($request,[
             'name' => 'required|max:50',
             'no_telp' => 'required|max:13',
-            'name' => 'required',
         ], $this->messages);
         Supplier::create([
             'name' => ucwords($request->name),
@@ -86,13 +85,17 @@ class SupplierController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|max:50',
-            'no_telp' => 'required|max:13',
-            'name' => 'required'
+            'no_telp' => 'required|max:13'
         ], $this->messages);
         $supplier = Supplier::find($request->id);
         $supplier->name = $request->name;
         $supplier->no_telp = $request->no_telp;
-        $supplier->keterangan = $request->keterangan;
+        if ($request->keterangan != null) {
+            $supplier->keterangan = $request->keterangan;
+        }
+        else{
+            $supplier->keterangan = "";
+        }
         $supplier->save();
         return redirect()->route('suppliers.index')->with(['successedit'=> 'Edit supplier sukses!']);
     }

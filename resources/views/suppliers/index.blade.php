@@ -34,7 +34,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <button class="btn btn-primary rounded" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</button>
+            <button class="btn btn-primary rounded" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Supplier</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -43,7 +43,7 @@
                   <tr>
                     <th>No.</th>
                     <th>Nama</th>
-                    <th>No. Telpon</th>
+                    <th>No. Telepon</th>
                     <th>Keterangan</th>
                     <th>Opsi</th>
                   </tr>
@@ -102,11 +102,11 @@
                 <input type="text" name="name" class="form-control" required="" value="{{old('name')}}">
               </div>
               <div class="form-group">
-                <label>No. Telpon *</label>
+                <label>No. Telepon *</label>
                 <input type="text" name="no_telp" class="form-control" required="" value="{{old('no_telp')}}">
               </div>
               <div class="form-group">
-                <label>Keterangan *</label>
+                <label>Keterangan</label>
                 <textarea class="form-control" name="keterangan" value="{{old('keterangan')}}"></textarea>
               </div>
               <div class="form-group">
@@ -139,11 +139,11 @@
                 <input type="text" id="supplierName" name="name" class="form-control" required="" value="{{old('name')}}">
               </div>
               <div class="form-group">
-                <label>No. Telpon *</label>
+                <label>No. Telepon *</label>
                 <input type="text" id="supplierNoTelp" name="no_telp" class="form-control" required="" value="{{old('no_telp')}}">
               </div>
               <div class="form-group">
-                <label>Keterangan *</label>
+                <label>Keterangan</label>
                 <textarea class="form-control" id="supplierKeterangan" name="keterangan" value="{{old('keterangan')}}"></textarea>
               </div>
               <div class="form-group">
