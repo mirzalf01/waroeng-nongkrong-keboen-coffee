@@ -115,7 +115,14 @@
               </div>
               <div class="form-group">
                 <label>Gambar</label>
-                <input type="file" name="image" class="form-control">
+                <div class="row">
+                  <div class="col-9">
+                    <input type="file" name="image" class="form-control" id="img-clear-add">
+                  </div>
+                  <div class="col-3">
+                    <div class="form-control text-center" style="cursor:pointer" id="delete-add">X</div>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>Kategori *</label>
@@ -164,7 +171,14 @@
               </div>
               <div class="form-group">
                 <label>Gambar</label>
-                <input type="file" name="image" class="form-control">
+                <div class="row">
+                  <div class="col-9">
+                    <input type="file" name="image" class="form-control" id="img-clear-edit">
+                  </div>
+                  <div class="col-3">
+                    <div class="form-control text-center" style="cursor:pointer" id="delete-edit">X</div>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>Kategori *</label>
@@ -202,6 +216,12 @@
 
   
   <script>
+    $('#delete-edit').click(function () { 
+      $('#img-clear-edit').val('');
+    });
+    $('#delete-add').click(function () { 
+      $('#img-clear-add').val('');
+    });
     $("#table-1").dataTable({
       "columnDefs": [
         { "sortable": false, "targets": [1,6] }
