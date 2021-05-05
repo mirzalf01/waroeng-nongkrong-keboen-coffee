@@ -125,7 +125,7 @@
                         <div class="card-body p-1" style="height: 40%">
                           <h6 class="card-title h-50 mb-0">{{ $drink->name }}</h6>
                           <div class="detail h-50">
-                            <p class="card-text mb-0">Rp. {{ number_format($snack->price, 0, ".", ".") }}</p>
+                            <p class="card-text mb-0">Rp. {{ number_format($drink->price, 0, ".", ".") }}</p>
                             <button type="button" data-food="{{ $drink }}" class="btn btn-sm btn-primary mt-0" data-toggle="modal" data-target="#tambahcart">
                               <span class="fas fa-plus" aria-hidden="true"></span> Keranjang
                             </button>
