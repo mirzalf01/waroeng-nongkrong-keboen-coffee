@@ -8,9 +8,9 @@ use App\Models\Cart;
 class CartController extends Controller
 {
     private $messages = [
-        'required' => ':attribute tidak boleh kosong!',
-        'numeric' => ':attribute harus di isi angka!',
-        'min' => ':attribute minimal > 0'
+        'required' => ':Attribute tidak boleh kosong!',
+        'numeric' => ':Attribute harus di isi angka!',
+        'min' => ':Attribute minimal > 0'
     ];
     public function index(){
         $carts = Cart::get();

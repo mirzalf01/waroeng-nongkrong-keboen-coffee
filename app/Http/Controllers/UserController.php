@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     private $messages = [
-        'required' => ':attribute tidak boleh kosong!'
+        'required' => ':Attribute tidak boleh kosong!',
+        'unique' => ':Attribute sudah digunakan'
     ];
     public function index(){
         $users = User::orderBy('role', 'ASC')->get();
@@ -19,7 +20,7 @@ class UserController extends Controller
     public function update(Request $request){
         $this->validate($request,[
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users',
             'role' => 'required'
         ], $this->messages);
 

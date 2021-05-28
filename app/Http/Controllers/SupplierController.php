@@ -8,8 +8,8 @@ use App\Models\Supplier;
 class SupplierController extends Controller
 {
     private $messages = [
-        'required' => ':attribute tidak boleh kosong!',
-        'max' => ':attribute harus diisi maksimal :max karakter!'
+        'required' => ':Attribute tidak boleh kosong!',
+        'max' => ':Attribute harus diisi maksimal :max karakter!'
     ];
     /**
      * Display a listing of the resource.

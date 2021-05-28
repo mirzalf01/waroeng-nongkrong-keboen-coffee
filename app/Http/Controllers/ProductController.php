@@ -9,11 +9,13 @@ use File;
 class ProductController extends Controller
 {
     private $messages = [
-        'required' => ':attribute tidak boleh kosong!',
-        'max' => ':attribute harus diisi maksimal :max karakter!',
-        'numeric' => ':attribute harus diisi dengan angka!',
-        'file' => ':attribute merupakan tipe file!',
-        'mimes' => ':attribute format yang diterima :mimes!',
+        'required' => ':Attribute tidak boleh kosong',
+        'max' => ':Attribute harus diisi maksimal :max',
+        'numeric' => ':Attribute harus diisi dengan angka',
+        'file' => ':Attribute merupakan tipe file!',
+        'mimes' => ':Attribute format yang diterima jpeg,png, dan jpg',
+        'image' => ':Attribute harus merupakan sebuah gambar',
+        'image.max' => 'Gambar maksimal :max kb'
     ];
     
     /**

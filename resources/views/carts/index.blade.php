@@ -34,7 +34,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-primary rounded"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Produk</a>
+            <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-primary rounded"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Item</a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
