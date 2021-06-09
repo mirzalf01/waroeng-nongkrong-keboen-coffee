@@ -18,14 +18,15 @@ class CartController extends Controller
     }
     public function store(Request $request){
         $this->validate($request,[
-            'jumlah' => 'required|numeric|min:1'
+            'jumlah' => 'required|numeric|min:1',
+            'discount' => 'required|numeric|min:0'
         ], $this->messages);
         $cart = Cart::where('product_id', $request->id)->first();
         if (empty($cart)) {
             Cart::create([
                 'product_id' => $request->id,
                 'qty' => $request->jumlah,
-                'discount' => 0,
+                'discount' => $request->discount,
                 'total' => $request->price * $request->jumlah
             ]);
         }

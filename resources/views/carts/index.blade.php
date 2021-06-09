@@ -122,7 +122,7 @@
               </div>
               <div class="form-group">
                 <label>Discount <span class="text-secondary">(Tulis 0 jika tidak ada)</span></label>
-                <input type="number" id="productDiscount" name="discount" class="form-control" required="" value="{{old('discount')}}">
+                <input type="number" id="productDiscount" name="discount" class="form-control" value="{{old('discount')}}">
               </div>
               <div class="form-group">
                 <label>Total Harga</label>

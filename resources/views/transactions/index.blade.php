@@ -292,6 +292,10 @@
                 <label>Jumlah</label>
                 <input type="number" id="cartJumlah" name="jumlah" class="form-control" required="">
               </div>
+              <div class="form-group">
+                <label>Discount <span class="text-secondary">(Tulis 0 jika tidak ada)</span></label>
+                <input type="number" id="cartDiscount" name="discount" class="form-control" required="" value="0">
+              </div>
               <button class="btn btn-primary mt-3">Submit</button>
             </form>
           </div>
